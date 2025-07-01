@@ -23,7 +23,7 @@ fun WelcomeScreen(onStartClick: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
+            .background(Color(0xFFFFFFFFF))
             .padding(horizontal = 24.dp, vertical = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
@@ -39,7 +39,7 @@ fun WelcomeScreen(onStartClick: () -> Unit = {}) {
                 .padding(horizontal = 12.dp, vertical = 8.dp)
         )
         Image(
-            painter = painterResource(id = R.drawable.pic_welcome),
+            painter = painterResource(id = R.drawable.femenine),
             contentDescription = "Welcome Image",
             modifier = Modifier
                 .height(260.dp)
