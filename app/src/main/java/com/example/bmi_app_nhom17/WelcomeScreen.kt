@@ -28,7 +28,7 @@ fun WelcomeScreen(onStartClick: () -> Unit = {}) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(18.dp))
 
         Text(
             text = "Let’s help you get better!!",
@@ -50,7 +50,7 @@ fun WelcomeScreen(onStartClick: () -> Unit = {}) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .padding(bottom = 24.dp),
+                .padding(bottom = 33.dp),
             shape = RoundedCornerShape(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF6C63FF)
