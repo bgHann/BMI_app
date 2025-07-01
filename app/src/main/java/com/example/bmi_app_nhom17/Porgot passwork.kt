@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -18,12 +19,14 @@ import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun SendOtpScreen(onBackClick: () -> Unit = {},
-                  onSendOtpClick: () -> Unit = {}, )
+fun Porgot_pass(
+    onBackClick: () -> Unit = {},
+    onSendOtpClick: () -> Unit = {}, )
 {
+    val focusManager = LocalFocusManager.current
     var email by remember { mutableStateOf(TextFieldValue("")) }
     Surface(modifier = Modifier.fillMaxSize()
-        .background(Color(0xFFF5F5F5))) {
+        .background(Color(0xFFF5F5F5)).clickable {focusManager.clearFocus() }) {
         Column(modifier = Modifier.padding(top = 25.dp, start = 20.dp
         , end = 20.dp)) {
             IconButton(onBackClick) {
@@ -114,5 +117,5 @@ fun SendOtpScreen(onBackClick: () -> Unit = {},
 @Preview(showBackground = true)
 @Composable
 fun PreviewSendOtpScreen() {
-    SendOtpScreen()
+   Porgot_pass()
 }

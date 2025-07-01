@@ -40,8 +40,10 @@ fun AppNavigation() {
             )
         }
         composable("gửi mã otp"){
-            SendOtpScreen(
-                onBackClick = {navController.navigate("quay lại màn signIn")}
+            Porgot_pass(
+                onBackClick = {navController.navigate("quay lại màn signIn")},
+                onSendOtpClick = {navController.navigate("Enter OTP")}
+
             )
 
         }
@@ -51,6 +53,9 @@ fun AppNavigation() {
                 onSignup = {navController.navigate("quay lại sign up")}
 
             )
+        }
+        composable("Enter OTP"){
+            EnterOtpScreen()
         }
 
     }}
