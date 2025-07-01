@@ -58,10 +58,17 @@ fun AppNavigation() {
             )
         }
         composable("Enter OTP"){
-            EnterOtpScreen()
+            EnterOtpScreen(
+                onResetClick = {navController.navigate("signIn")}
+            )
         }
         composable("Dashboard"){
-            Dashboard()
+            Dashboard(
+                onBMI = {navController.navigate("BMI")}
+            )
+        }
+        composable("BMI"){
+                BmiCalculatorScreen()
         }
 
     }}
