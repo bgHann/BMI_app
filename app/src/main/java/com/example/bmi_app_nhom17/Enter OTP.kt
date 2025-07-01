@@ -1,6 +1,7 @@
 package com.example.bmi_app_nhom17
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -20,9 +22,10 @@ fun EnterOtpScreen(onResetClick: () -> Unit = {}) {
     var otp by remember { mutableStateOf("") }
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier
+        modifier = Modifier.clickable { focusManager.clearFocus() }
             .fillMaxSize()
             .padding(top = 110.dp, start = 25.dp, end = 25.dp)
             .background(Color(0xFFF5F5F5)),
