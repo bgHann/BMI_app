@@ -39,11 +39,11 @@ fun WelcomeScreen(onStartClick: () -> Unit = {}) {
                 .padding(horizontal = 12.dp, vertical = 8.dp)
         )
         Image(
-            painter = painterResource(id = R.drawable.femenine),
+            painter = painterResource(id = R.drawable.group_51),
             contentDescription = "Welcome Image",
             modifier = Modifier
-                .height(260.dp)
-                .width(220.dp)
+                .height(201.dp)
+                .width(284.dp)
         )
         Button(
             onClick = onStartClick,
