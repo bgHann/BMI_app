@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 
 
 @Composable
@@ -43,7 +44,7 @@ fun frame1(onNextClick : ()-> Unit){
                     .width(301.dp)    //   ngang
                     .height(81.dp),   //  cao
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF6C63FF)
+                    containerColor = BackgroudButon
 
                 ),
                 elevation = ButtonDefaults.buttonElevation( // Bóng đổ

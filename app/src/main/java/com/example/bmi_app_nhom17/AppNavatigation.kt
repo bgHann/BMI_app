@@ -23,13 +23,15 @@ fun AppNavigation() {
         composable("signUp"){
             SignUpScreen(
                 onSignInClick = {navController.navigate("signIn")},
-                onSignUpClick = {navController.navigate("")}
+                onSignUpClick = {navController.navigate("Dashboard")},
+
             )
         }
         composable("signIn"){
             signIn(
                 onSignup = {navController.navigate("quay lại sign up")},
-                onforgot = {navController.navigate("gửi mã otp")}
+                onforgot = {navController.navigate("gửi mã otp")},
+                onSignin = {navController.navigate("Dashboard")}
             )
 
         }
@@ -50,12 +52,16 @@ fun AppNavigation() {
         composable("quay lại màn signIN"){
             signIn(
                 onforgot = {navController.navigate("gửi mã otp")},
-                onSignup = {navController.navigate("quay lại sign up")}
+                onSignup = {navController.navigate("quay lại sign up")},
+                onSignin = {navController.navigate("Dashboard")}
 
             )
         }
         composable("Enter OTP"){
             EnterOtpScreen()
+        }
+        composable("Dashboard"){
+            Dashboard()
         }
 
     }}

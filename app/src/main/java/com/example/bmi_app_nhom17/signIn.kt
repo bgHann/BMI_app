@@ -22,6 +22,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
+import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 
 @Composable
 fun signIn(
@@ -38,8 +40,8 @@ fun signIn(
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
-            .clickable { focusManager.clearFocus() } // chạm ra ngoài để ẩn bàn phím
+            .clickable { focusManager.clearFocus() }, // chạm ra ngoài để ẩn bàn phím
+        color = BackgroudColor
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -122,7 +124,7 @@ fun signIn(
                             style = SpanStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = Color(0xFF6C63FF)
+                                color = BackgroudButon
                             )
                         ) {
                             append("Sign up")

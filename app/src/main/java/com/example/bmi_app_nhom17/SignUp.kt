@@ -21,9 +21,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
-
-
-
+import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
+import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 
 
 @Composable
@@ -45,9 +44,9 @@ fun SignUpScreen(
 
     Surface(
         modifier = Modifier.clickable{focusManager.clearFocus()}
-            .fillMaxSize()
-            .background(Color(0xFFD9D9D9)
-            )
+            .fillMaxSize(),
+           color = BackgroudColor
+
     ) {
         Column(
             modifier = Modifier
@@ -100,7 +99,7 @@ fun SignUpScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(75.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
+                colors = ButtonDefaults.buttonColors(containerColor = BackgroudButon),
                 shape = RoundedCornerShape(50.dp)
             ) {
                 Text("Sign Up", fontSize = 18.sp, color = Color.White)

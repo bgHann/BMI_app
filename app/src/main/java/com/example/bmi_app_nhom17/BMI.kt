@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
+import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 
 // SUửa lại
 @Composable
@@ -29,8 +31,7 @@ fun BmiCalculatorScreen() {
     var age by remember { mutableStateOf(24) }
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        modifier = Modifier.fillMaxSize().background(BackgroudColor)
     ) {
         Column(
             modifier = Modifier
@@ -93,7 +94,7 @@ fun BmiCalculatorScreen() {
 
             Button(
                 onClick = { /* handle calculate BMI */ },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
+                colors = ButtonDefaults.buttonColors(containerColor = BackgroudButon),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),

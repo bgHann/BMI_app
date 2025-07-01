@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
+import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 
 @Composable
 fun Porgot_pass(
@@ -26,7 +28,7 @@ fun Porgot_pass(
     val focusManager = LocalFocusManager.current
     var email by remember { mutableStateOf(TextFieldValue("")) }
     Surface(modifier = Modifier.fillMaxSize()
-        .background(Color(0xFFF5F5F5)).clickable {focusManager.clearFocus() }) {
+        .clickable {focusManager.clearFocus() }, color = BackgroudColor) {
         Column(modifier = Modifier.padding(top = 25.dp, start = 20.dp
         , end = 20.dp)) {
             IconButton(onBackClick) {
@@ -95,7 +97,7 @@ fun Porgot_pass(
                         .height(83.dp),
                     shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF6C63FF)
+                        containerColor = BackgroudButon
                     ),
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 10.dp,
