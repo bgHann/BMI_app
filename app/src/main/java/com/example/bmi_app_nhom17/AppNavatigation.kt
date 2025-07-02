@@ -64,6 +64,7 @@ fun AppNavigation() {
         }
         composable("Dashboard"){
             Dashboard(
+                onleft = {navController.navigate("Track")},
                 onBMI = {navController.navigate("BMI")},
                 onRight = {navController.navigate("Setting")}
             )
@@ -78,6 +79,13 @@ fun AppNavigation() {
                 onSignOut = {navController.navigate("signIn")}
             )
 
+        }
+        composable("Track") {
+            TrackScreen(
+                onleft = { navController.navigate("Dashboard") },
+                onCenter = { navController.navigate("Blank") },
+                onRight = {}
+            )
         }
 
         composable("Profile"){
