@@ -41,29 +41,29 @@ fun TrackScreen(
     onCenter: () -> Unit = {},
     onRight: () -> Unit = {}
 ) {
-    Surface(
-        modifier = Modifier
-            .fillMaxSize(),
-        color = BackgroudColor
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 15.dp, end = 15.dp)
-        ) {
-            // Top padding như setting
-            Spacer(modifier = Modifier.height(130.dp))
+    Surface(modifier = Modifier.fillMaxSize(), color = BackgroudColor) {
+        Column(modifier = Modifier.fillMaxSize().padding(start = 15.dp, end = 15.dp)) {
 
-            // (Hiện tại không có nội dung giữa màn hình — để trống)
-            Spacer(modifier = Modifier.size(380.dp))
 
-            // Thanh điều hướng dưới cùng
-            bottom_design(onleft, onCenter, onRight)
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(top = 130.dp, start = 15.dp, end = 15.dp)
+            ) {
+                // Top padding như setting
+                Spacer(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 130.dp, start = 15.dp, end = 15.dp)
+                )
+
+                // (Hiện tại không có nội dung giữa màn hình — để trống)
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Thanh điều hướng dưới cùng
+                bottom_design(onleft, onCenter, onRight)
+            }
         }
     }
+
 }
-
-
 
 @Preview(showBackground = true)
 @Composable

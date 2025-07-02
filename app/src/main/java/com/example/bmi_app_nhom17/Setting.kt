@@ -54,9 +54,12 @@ fun settingScreen (
                 Card(title = "History", onclick = onHistory)
                 Spacer(modifier = Modifier.size(15.dp))
                 Card(title = "Sign Out", onclick = onSignOut)
-                Spacer(modifier = Modifier.size(380.dp))
+
+                Spacer(modifier = Modifier.weight(1f))
+                bottom_design(onleft,onCenter,onRight)
             }
-            bottom_design(onleft,onCenter,onRight)
+
+
     }
 }
 }

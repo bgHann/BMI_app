@@ -38,55 +38,62 @@ fun Dashboard (
     onleft : ()->Unit = {},
     onCenter : ()->Unit = {},
     onRight: ()->Unit = {}
-){
-    Surface(modifier = Modifier.fillMaxSize().padding( start = 15.dp, end = 15.dp),
-        color = (BackgroudColor)) {
-        Column (modifier = Modifier.fillMaxWidth()){
-            Spacer(modifier = Modifier.size(58.dp))
-            Text(
-                text = "GOOD MORNING",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = 35.dp)
+) {
 
-                )
-            Spacer(modifier = Modifier.size(130.dp))
-            Button(
-                onClick = onBMI,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFEEEEEE)
-                ),
-                modifier = Modifier.fillMaxWidth().height(148.dp),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 15.dp,
-                   pressedElevation = 25.dp,//khi bamsa
-                    hoveredElevation = 20.dp //khi de chuotj qua
+        Surface(modifier = Modifier.fillMaxSize(), color = BackgroudColor) {
+            Column(modifier = Modifier.fillMaxSize().padding(start = 15.dp, end = 15.dp)) {
 
-                )
-            ) {
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                ){
-                    Text(text = "Calculate your BMI",
-                        color = Color.Black,
+
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(top = 130.dp, start = 15.dp, end = 15.dp)
+                ) {
+                    Spacer(modifier = Modifier.size(58.dp))
+                    Text(
+                        text = "GOOD MORNING",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
-                        )
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Image(painter = painterResource(id = R.drawable.dash101771 ),
-                        contentDescription = "",
-                        modifier = Modifier.height(95.dp)
-                        )
-                }
-            }
-            Spacer(modifier = Modifier.size(390.dp))
-            bottom_design(onleft,onCenter,onRight)
+                        modifier = Modifier.padding(start = 35.dp)
 
+                    )
+                    Spacer(modifier = Modifier.size(130.dp))
+                    Button(
+                        onClick = onBMI,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFEEEEEE)
+                        ),
+                        modifier = Modifier.fillMaxWidth().height(148.dp),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 15.dp,
+                            pressedElevation = 25.dp,//khi bamsa
+                            hoveredElevation = 20.dp //khi de chuotj qua
+
+                        )
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = "Calculate your BMI",
+                                color = Color.Black,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.SemiBold,
+                            )
+                            Spacer(modifier = Modifier.size(10.dp))
+                            Image(
+                                painter = painterResource(id = R.drawable.dash101771),
+                                contentDescription = "",
+                                modifier = Modifier.height(95.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    bottom_design(onleft,onCenter,onRight)
                 }
             }
 
         }
-
+    }
 
 @Preview(showBackground = true)
 @Composable
