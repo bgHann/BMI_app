@@ -35,9 +35,6 @@ import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 @Composable
 fun Dashboard (
     onBMI : ()->Unit ={},
-    onleft : ()-> Unit = {},
-    onCenter : ()->Unit = {},
-    onRight : ()-> Unit = {},
 ){
     Surface(modifier = Modifier.fillMaxSize().padding( start = 15.dp, end = 15.dp),
         color = (BackgroudColor)) {
@@ -80,49 +77,14 @@ fun Dashboard (
                 }
             }
             Spacer(modifier = Modifier.size(400.dp))
-            Card(modifier = Modifier.fillMaxWidth().height(88.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFFFFFFF)
-                )
-            ) {
-                Row (
-                    modifier = Modifier.padding(top = 1.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Button(onClick = onleft,
-                        colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFFFFFF))) {
-
-                        Image(
-                            painter = painterResource(id = R.drawable.track_select),
-                            contentDescription = ""
-                        )
-                    }
-                    Button(onClick = onCenter, colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFFFFFF)
-                    )) {
-                        Image(
-                            painter = painterResource(id = R.drawable.dashboardselect),
-                            contentDescription = ""
-                        )
-                    }
-                    Button(onClick = onRight,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFFFFFFF))) {
-                        Image(
-                            painter = painterResource(id = R.drawable.setting1),
-                            contentDescription = ""
-                        )
-                    }
-
+            bottom_design()
 
                 }
             }
 
         }
-    }
-}
+
+
 @Preview(showBackground = true)
 @Composable
 fun DashBoardScreen() {
