@@ -57,9 +57,9 @@ fun settingScreen (
                 Spacer(modifier = Modifier.size(380.dp))
             }
             bottom_design(onleft,onCenter,onRight)
-        }
     }
-    }
+}
+}
 
 @Preview(showBackground = true)
 @Composable

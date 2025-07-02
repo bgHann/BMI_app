@@ -79,6 +79,7 @@ fun AppNavigation() {
             )
 
         }
+
         composable("Profile"){
             profileSreen(
                 onBack = {navController.navigate("Setting")},
