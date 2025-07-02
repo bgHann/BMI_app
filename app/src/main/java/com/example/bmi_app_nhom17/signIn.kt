@@ -148,7 +148,7 @@ fun RoundedInputField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     focusRequester: FocusRequester? = null
 ) {
-    OutlinedTextField(
+    TextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(label) },
