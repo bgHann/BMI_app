@@ -55,7 +55,7 @@ fun TrackScreen(
             Spacer(modifier = Modifier.height(130.dp))
 
             // (Hiện tại không có nội dung giữa màn hình — để trống)
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.size(380.dp))
 
             // Thanh điều hướng dưới cùng
             bottom_design(onleft, onCenter, onRight)
