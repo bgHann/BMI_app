@@ -17,83 +17,81 @@ fun AppNavigation() {
         }
         composable("welcome") {
             WelcomeScreen(
-                onStartClick = {navController.navigate("signUp")}
+                onStartClick = { navController.navigate("signIn") }
             )
         }
-        composable("signUp"){
-            SignUpScreen(
-                onSignInClick = {navController.navigate("signIn")},
-                onSignUpClick = {navController.navigate("Dashboard")},
-
-            )
-        }
-        composable("signIn"){
+        composable("signIn") {
             signIn(
-                onSignup = {navController.navigate("quay lại sign up")},
-                onforgot = {navController.navigate("gửi mã otp")},
-                onSignin = {navController.navigate("Dashboard")}
+                onSignup = { navController.navigate("sign up") },
+                onforgot = { navController.navigate("gửi mã otp") },
+                onSignin = { navController.navigate("Dashboard") }
             )
-
         }
-        composable("quay lại sign up"){
+        composable("signUp") {
             SignUpScreen(
-                onSignInClick = {navController.navigate("signIn")}
-
+                onSignInClick = { navController.navigate("quay lại signIn") },
+                onSignUpClick = { navController.navigate("signIn") }
+                )
+        }
+        composable("sign up") {
+            SignUpScreen(
+                onSignInClick = { navController.navigate("quay lại signIn") },
+                onSignUpClick = { navController.navigate("signIn") }
             )
         }
-        composable("gửi mã otp"){
+        composable("gửi mã otp") {
             Porgot_pass(
-                onBackClick = {navController.navigate("quay lại màn signIn")},
-                onSendOtpClick = {navController.navigate("Enter OTP")}
+                onBackClick = { navController.navigate("quay lại màn signIn") },
+                onSendOtpClick = { navController.navigate("Enter OTP") }
 
             )
-
         }
-        composable("quay lại màn signIN"){
+        composable("quay lại màn signIN") {
             signIn(
-                onforgot = {navController.navigate("gửi mã otp")},
-                onSignup = {navController.navigate("quay lại sign up")},
-                onSignin = {navController.navigate("Dashboard")}
+                onforgot = { navController.navigate("gửi mã otp") },
+                onSignup = { navController.navigate("quay lại sign up") },
+                onSignin = { navController.navigate("Dashboard") }
 
             )
         }
-        composable("Enter OTP"){
+        composable("Enter OTP") {
             EnterOtpScreen(
-                onResetClick = {navController.navigate("signIn")}
+                onResetClick = { navController.navigate("signIn") }
             )
         }
-        composable("Dashboard"){
+        composable("Dashboard") {
             Dashboard(
-                onleft = {navController.navigate("Track")},
-                onBMI = {navController.navigate("BMI")},
-                onRight = {navController.navigate("Setting")}
+                onBMI = { navController.navigate("BMI") },
+                onRight = { navController.navigate("Setting") },
+                onLeft = { navController.navigate("Track")}
             )
         }
-        composable("BMI"){
-                BmiCalculatorScreen()
+        composable("BMI") {
+            BmiCalculatorScreen(
+                onBmiResults = {navController.navigate("Bmi_Results")}
+            )
         }
-        composable("Setting"){
+        composable("Setting") {
             settingScreen(
-                onCenter = {navController.navigate("Dashboard")},
-                onPrileclick = {navController.navigate("Profile")},
-                onSignOut = {navController.navigate("signIn")}
+                onCenter = { navController.navigate("Dashboard") },
+                onPrileclick = { navController.navigate("Profile") },
+                onSignOut = { navController.navigate("signIn") }
             )
 
         }
-        composable("Track") {
-            TrackScreen(
-                onleft = { navController.navigate("Dashboard") },
-                onCenter = { navController.navigate("Blank") },
-                onRight = {}
-            )
-        }
-
-        composable("Profile"){
+        composable("Profile") {
             profileSreen(
-                onBack = {navController.navigate("Setting")},
-
+                onBack = { navController.navigate("Setting") }
+                )
+        }
+        composable("Bmi_results"){
+            BmiResultScreen(
+                onDetails = {navController.navigate("Details")}
             )
         }
+        composable("Details"){
+        }
 
-    }}
+    }
+}
 

@@ -24,6 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
+import android.content.Context
+import android.provider.Settings.Global.putString
+import android.widget.Toast
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+
 
 @Composable
 fun signIn(
@@ -36,6 +42,11 @@ fun signIn(
 
     var email by remember { mutableStateOf("") }
     var pass by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val savedEmail = sharedPref.getString("email", null)
+    val savedPassword = sharedPref.getString("password", null)
 
     Surface(
         modifier = Modifier
@@ -88,7 +99,17 @@ fun signIn(
             Spacer(modifier = Modifier.size(30.dp))
 
             Button(
-                onClick = onSignin,
+                onClick = {
+                    if (email == savedEmail && pass == savedPassword) {
+                        with(sharedPref.edit()) {
+                            putString("username", email)
+                            apply()
+                        }
+                        onSignin()
+                    } else{
+                        Toast.makeText(context, "Email hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show()
+                    }
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(83.dp),

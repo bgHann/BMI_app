@@ -34,11 +34,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
+import androidx.compose.ui.platform.LocalContext
+import android.content.Context
+
 
 @Composable
 fun profileSreen(
     onBack: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+    val name = sharedPref.getString("Name", null)
+    val savedEmail = sharedPref.getString("email", null)
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = BackgroudColor
@@ -79,7 +87,7 @@ fun profileSreen(
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(15.dp))
-            infor("Lesny.io")
+            infor("$name")
             Spacer(modifier = Modifier.height(25.dp))
             Text(
                 text = "Email Address:",
@@ -87,10 +95,7 @@ fun profileSreen(
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(15.dp))
-            infor("info@bmi.codesmith")
-
-
-
+            infor("$savedEmail")
             }
         }
     }
@@ -105,7 +110,7 @@ fun PreviewprofileScreen(){
 @Composable
 fun infor (
     title : String
-){// Card hiển thị thông tin
+){
 androidx.compose.material3.Card(
 modifier = Modifier
 .fillMaxWidth()

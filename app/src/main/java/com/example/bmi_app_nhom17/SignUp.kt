@@ -1,5 +1,7 @@
 package com.example.bmi_app_nhom17
 
+import android.content.Context
+import android.provider.ContactsContract
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,6 +23,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 
@@ -31,6 +35,8 @@ fun SignUpScreen(
     onSignInClick: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
 
     // Focus chuyển giữa các input
     val emailFocus = remember { FocusRequester() }
@@ -95,7 +101,15 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(80.dp))
 
             Button(
-                onClick = onSignUpClick,
+                onClick = {
+                    with(sharedPref.edit()) {
+                        putString("Name", name)
+                        putString("email", email)
+                        putString("password", password)
+                        apply()
+                    }
+                    onSignUpClick()
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(75.dp),
@@ -168,4 +182,9 @@ fun RoundedInputField(
                 if (focusRequester != null) it.focusRequester(focusRequester) else it
             }
     )
+}
+@Preview
+@Composable
+fun SignUpPreview(){
+    SignUpScreen()
 }
