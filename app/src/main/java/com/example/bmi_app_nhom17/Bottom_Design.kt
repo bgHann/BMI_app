@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 @Composable
 fun bottom_design(
-    onleft : ()-> Unit = {},
-    onCenter : ()->Unit = {},
-    onRight : ()-> Unit = {},
+    onleft : ()-> Unit,
+    onCenter : ()->Unit,
+    onRight : ()-> Unit,
 
 
     ){

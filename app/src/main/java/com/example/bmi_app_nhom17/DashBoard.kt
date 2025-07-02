@@ -35,6 +35,9 @@ import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 @Composable
 fun Dashboard (
     onBMI : ()->Unit ={},
+    onleft : ()->Unit = {},
+    onCenter : ()->Unit = {},
+    onRight: ()->Unit = {}
 ){
     Surface(modifier = Modifier.fillMaxSize().padding( start = 15.dp, end = 15.dp),
         color = (BackgroudColor)) {
@@ -76,8 +79,8 @@ fun Dashboard (
                         )
                 }
             }
-            Spacer(modifier = Modifier.size(400.dp))
-            bottom_design()
+            Spacer(modifier = Modifier.size(390.dp))
+            bottom_design(onleft,onCenter,onRight)
 
                 }
             }

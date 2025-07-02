@@ -38,22 +38,25 @@ fun settingScreen (
     onPrileclick : () -> Unit ={ },
     onHistory : ()-> Unit = {},
     onSignOut : ()-> Unit = {},
+    onleft : ()->Unit = {},
+    onCenter : ()->Unit = {},
+    onRight: ()->Unit = {},
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = BackgroudColor) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize().padding(start = 15.dp, end = 15.dp)) {
 
 
             Column(
-                modifier = Modifier.fillMaxWidth().padding(top = 130.dp, start = 25.dp, end = 25.dp)
+                modifier = Modifier.fillMaxWidth().padding(top = 130.dp, start = 15.dp, end = 15.dp)
             ) {
                 Card(title = "Profile", onclick = onPrileclick)
                 Spacer(modifier = Modifier.size(15.dp))
                 Card(title = "History", onclick = onHistory)
                 Spacer(modifier = Modifier.size(15.dp))
                 Card(title = "Sign Out", onclick = onPrileclick)
-                Spacer(modifier = Modifier.size(390.dp))
+                Spacer(modifier = Modifier.size(380.dp))
             }
-            bottom_design()
+            bottom_design(onleft,onCenter,onRight)
         }
     }
     }
