@@ -73,9 +73,15 @@ fun AppNavigation() {
         }
         composable("Setting"){
             settingScreen(
-                onCenter = {navController.navigate("Dashboard")}
+                onCenter = {navController.navigate("Dashboard")},
+                onPrileclick = {navController.navigate("Profile")}
             )
 
+        }
+        composable("Profile"){
+            profileSreen(
+                onBack = {navController.navigate("Setting")}
+            )
         }
 
     }}
