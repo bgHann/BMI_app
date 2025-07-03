@@ -12,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -39,7 +38,7 @@ fun BmiCalculatorScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(14.dp),
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -108,6 +107,8 @@ fun BmiCalculatorScreen(
                     value = weight,
                     onIncrease = { weight++ },
                     onDecrease = { if (weight > 1) weight-- },
+                    plusIcon = R.drawable.plus,
+                    minusIcon = R.drawable.minus,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -116,12 +117,14 @@ fun BmiCalculatorScreen(
                     value = age,
                     onIncrease = { age++ },
                     onDecrease = { if (age > 1) age-- },
+                    plusIcon = R.drawable.plus,
+                    minusIcon = R.drawable.minus,
                     modifier = Modifier.weight(1f)
                 )
             }
 
             Button(
-                onClick =  onBMI ,
+                onClick = onBMI,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,12 +159,12 @@ fun Malecart(
             border = BorderStroke(2.dp, borderColor),
             colors = CardDefaults.cardColors(containerColor = backgroundColor)
         ) {
-            Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.padding(40.dp), contentAlignment = Alignment.Center) {
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = label,
                     tint = if (selected) Color(0xFF6C63FF) else Color.Gray,
-                    modifier = Modifier.size(60.dp)
+                    modifier = Modifier.size(80.dp)
                 )
             }
         }
@@ -171,7 +174,15 @@ fun Malecart(
 }
 
 @Composable
-fun ValueCard(label: String, value: Int, onIncrease: () -> Unit, onDecrease: () -> Unit, modifier: Modifier = Modifier) {
+fun ValueCard(
+    label: String,
+    value: Int,
+    onIncrease: () -> Unit,
+    onDecrease: () -> Unit,
+    @DrawableRes plusIcon: Int,
+    @DrawableRes minusIcon: Int,
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier.padding(8.dp),
         shape = RoundedCornerShape(20.dp),
@@ -187,15 +198,18 @@ fun ValueCard(label: String, value: Int, onIncrease: () -> Unit, onDecrease: () 
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                CircleButton("+") { onIncrease() }
-                CircleButton("-") { onDecrease() }
+                CircleButton(icon = plusIcon) { onIncrease() }
+                CircleButton(icon = minusIcon) { onDecrease() }
             }
         }
     }
 }
 
 @Composable
-fun CircleButton(text: String, onClick: () -> Unit) {
+fun CircleButton(
+    @DrawableRes icon: Int,
+    onClick: () -> Unit
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -203,12 +217,17 @@ fun CircleButton(text: String, onClick: () -> Unit) {
             .background(Color(0xFF6C63FF), CircleShape)
             .clickable { onClick() }
     ) {
-        Text(text, color = Color.White, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            tint = Color.Unspecified,
+            modifier = Modifier.size(50.dp)
+        )
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun BmiCalculatorScreenPreview() {
-//    BmiCalculatorScreen()
-//}
+@Preview(showBackground = true)
+@Composable
+fun BmiCalculatorScreenPreview() {
+    BmiCalculatorScreen(onBMI = {})
+}
