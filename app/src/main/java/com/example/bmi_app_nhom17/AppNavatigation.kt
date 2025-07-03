@@ -63,12 +63,12 @@ fun AppNavigation() {
             Dashboard(
                 onBMI = { navController.navigate("BMI") },
                 onRight = { navController.navigate("Setting") },
-                onLeft = { navController.navigate("Track")}
+                onleft = { navController.navigate("Track")}
             )
         }
         composable("BMI") {
             BmiCalculatorScreen(
-                onBmiResults = {navController.navigate("Bmi_Results")}
+                onBMI = {navController.navigate("Bmi_Results")}
             )
         }
         composable("Setting") {

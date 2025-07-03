@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun BmiCalculatorScreen() {
+fun BmiCalculatorScreen(
+    onBMI: () -> Unit
+) {
     var isMale by remember { mutableStateOf(true) }
     var height by remember { mutableStateOf(155f) }
     var weight by remember { mutableStateOf(65) }
@@ -119,7 +121,7 @@ fun BmiCalculatorScreen() {
             }
 
             Button(
-                onClick = { /* handle calculate BMI */ },
+                onClick =  onBMI ,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -205,8 +207,8 @@ fun CircleButton(text: String, onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun BmiCalculatorScreenPreview() {
-    BmiCalculatorScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun BmiCalculatorScreenPreview() {
+//    BmiCalculatorScreen()
+//}
