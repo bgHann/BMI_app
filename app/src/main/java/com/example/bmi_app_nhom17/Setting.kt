@@ -36,7 +36,7 @@ import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 @Composable
 fun settingScreen (
     onPrileclick : () -> Unit ={ },
-    onHistory : ()-> Unit = {},
+    onNotifications : ()-> Unit = {},
     onSignOut : ()-> Unit = {},
     onleft : ()->Unit = {},
     onCenter : ()->Unit = {},
@@ -51,7 +51,7 @@ fun settingScreen (
             ) {
                 Card(title = "Profile", onclick = onPrileclick)
                 Spacer(modifier = Modifier.size(15.dp))
-                Card(title = "History", onclick = onHistory)
+                Card(title = "Notifications", onclick = onNotifications)
                 Spacer(modifier = Modifier.size(15.dp))
                 Card(title = "Sign Out", onclick = onSignOut)
 
