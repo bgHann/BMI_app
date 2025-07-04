@@ -79,6 +79,13 @@ fun AppNavigation() {
             )
 
         }
+        composable("Track") {
+            TrackScreen(
+                onleft = { navController.navigate("Dashboard") },
+                onCenter = { navController.navigate("DashBoard") },
+                onRight = { navController.navigate("Setting")}
+            )
+        }
         composable("Profile") {
             profileSreen(
                 onBack = { navController.navigate("Setting") }

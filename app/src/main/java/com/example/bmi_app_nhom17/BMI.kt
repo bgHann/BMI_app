@@ -80,7 +80,7 @@ fun BmiCalculatorScreen(
                             withStyle(SpanStyle(fontSize = 32.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)) {
                                 append("${height.toInt()}")
                             }
-                            withStyle(SpanStyle(fontSize = 18.sp, color = Color.Gray)) {
+                            withStyle(SpanStyle(fontSize = 16.sp, color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)) {
                                 append(" cm")
                             }
                         }
@@ -145,8 +145,8 @@ fun Malecart(
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (selected) Color(0xFFEDE7F6) else Color(0xFFF2F2F2)
-    val borderColor = if (selected) Color(0xFF6C63FF) else Color.Transparent
+    val backgroundColor = if (selected) Color(0xFFF5F5F5) else Color(0xFFF2F2F2)
+    val borderColor = if (selected) Color(0xFF00B0FF) else Color.Transparent
 
     Column(
         modifier = Modifier
@@ -154,24 +154,41 @@ fun Malecart(
             .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // KHÔNG chồng icon lên card bên trong nữa → tránh tạo khung vuông xám
         Card(
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(24.dp),
             border = BorderStroke(2.dp, borderColor),
-            colors = CardDefaults.cardColors(containerColor = backgroundColor)
+            colors = CardDefaults.cardColors(containerColor = backgroundColor),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
-            Box(modifier = Modifier.padding(40.dp), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .size(110.dp)
+                    .padding(12.dp),
+                contentAlignment = Alignment.Center
+            ) {
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = label,
-                    tint = if (selected) Color(0xFF6C63FF) else Color.Gray,
+                    tint = Color.Unspecified, // giữ nguyên màu gradient gốc
                     modifier = Modifier.size(80.dp)
                 )
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
-        Text(label, fontWeight = FontWeight.Bold, color = Color.Black)
+
+        // Chỉ giữ 1 dòng text chính
+        Text(
+            text = label,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
+            color = Color.Black
+        )
     }
 }
+
+
 
 @Composable
 fun ValueCard(
