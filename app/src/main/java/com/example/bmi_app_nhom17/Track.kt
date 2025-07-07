@@ -39,34 +39,68 @@ sealed class Screen(val route: String) {
 fun TrackScreen(
     onleft: () -> Unit = {},
     onCenter: () -> Unit = {},
-    onRight: () -> Unit = {}
+    onRight: () -> Unit = {},
+    bmi: Float,
+    category: String,
+    title: String
 ) {
+
     Surface(modifier = Modifier.fillMaxSize(), color = BackgroudColor) {
-        Column(modifier = Modifier.fillMaxSize().padding(start = 15.dp, end = 15.dp)) {
-
-
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 15.dp, end = 15.dp)
+        ) {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(top = 130.dp, start = 15.dp, end = 15.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 130.dp, start = 15.dp, end = 15.dp)
             ) {
-                // Top padding như setting
-                Spacer(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(top = 130.dp, start = 15.dp, end = 15.dp)
+                // Hiển thị chỉ số BMI
+                Text(
+                    text = "Chỉ số BMI gần nhất của bạn",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.Black
                 )
 
-                // (Hiện tại không có nội dung giữa màn hình — để trống)
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "BMI: ${String.format("%.1f", bmi)}",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Sumary: $category",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.DarkGray
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "Comment: $title",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
+
                 Spacer(modifier = Modifier.weight(1f))
 
-                // Thanh điều hướng dưới cùng
                 bottom_design(onleft, onCenter, onRight)
             }
         }
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewTrackScreen() {
-    TrackScreen()
+    TrackScreen(
+        bmi = 23.5f,
+        category = "Healthy",
+        title = "123456"
+    )
 }

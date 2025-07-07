@@ -32,7 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BmiResultScreen(
-    onDetails: () -> Unit,
+    onDetails: (Float) -> Unit,
     bmi: Float
 ) {
     val status = when {
@@ -84,7 +84,7 @@ fun BmiResultScreen(
 
             // Button
             Button(
-                onClick = onDetails,
+                onClick = {onDetails(bmi)},
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 shape = RoundedCornerShape(24.dp),
                 modifier = Modifier

@@ -45,10 +45,14 @@ fun AppNavigation() {
             )
         }
         composable("Dashboard") {
+                backStackEntry ->
+            val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
+            val category = backStackEntry.arguments?.getString("category") ?: "Unknown"
+            val title = backStackEntry.arguments?.getString("title") ?: "title"
             Dashboard(
                 onBMI = { navController.navigate("BMI") },
                 onRight = { navController.navigate("Setting") },
-                onleft = { navController.navigate("Track") }
+                onleft = { navController.navigate("Tracks/${bmi}/${category}/${title}") }
             )
         }
         composable("BMI") {
@@ -65,8 +69,22 @@ fun AppNavigation() {
                 onSignOut = { navController.navigate("signIn") }
             )
         }
-        composable("Track") {
+        composable(
+            route = "Tracks/{bmi}/{category}/{title}",
+            arguments = listOf(
+                navArgument("bmi") { type = NavType.FloatType },
+                navArgument("category") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType}
+            )
+        )
+        {backStackEntry ->
+            val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
+            val category = backStackEntry.arguments?.getString("category") ?: "Unknown"
+            val title = backStackEntry.arguments?.getString("title") ?: "title"
             TrackScreen(
+                bmi = bmi,
+                category = category,
+                title = title,
                 onleft = { navController.navigate("Dashboard") },
                 onCenter = { navController.navigate("Dashboard") },
                 onRight = { navController.navigate("Setting") }
