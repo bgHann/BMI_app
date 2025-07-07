@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun BmiCalculatorScreen(
-    onBMI: () -> Unit
+    onBMI: (Float) -> Unit
 ) {
     var isMale by remember { mutableStateOf(true) }
     var height by remember { mutableStateOf(155f) }
@@ -124,7 +124,11 @@ fun BmiCalculatorScreen(
             }
 
             Button(
-                onClick = onBMI,
+                onClick = {
+                    val heightm = height /100
+                    val bmi = weight / (heightm * heightm)
+                    onBMI(bmi)
+                          },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 modifier = Modifier
                     .fillMaxWidth()

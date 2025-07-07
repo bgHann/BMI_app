@@ -55,6 +55,7 @@ dependencies {
 
     // Chỉ giữ dòng này cho Navigation Compose
     implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

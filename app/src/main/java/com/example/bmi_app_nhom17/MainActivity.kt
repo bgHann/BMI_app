@@ -18,12 +18,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
             BMI_app_Nhom17Theme {
                 AppNavigation()
             }
         }
-
     }
 }
 

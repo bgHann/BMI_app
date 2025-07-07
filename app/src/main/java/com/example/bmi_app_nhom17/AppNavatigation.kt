@@ -1,9 +1,9 @@
 package com.example.bmi_app_nhom17
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
+import androidx.navigation.navArgument
 
 @Composable
 fun AppNavigation() {
@@ -22,39 +22,24 @@ fun AppNavigation() {
         }
         composable("signIn") {
             signIn(
-                onSignup = { navController.navigate("sign up") },
-                onforgot = { navController.navigate("gửi mã otp") },
+                onSignup = { navController.navigate("signUp") },
+                onforgot = { navController.navigate("sendOtp") },
                 onSignin = { navController.navigate("Dashboard") }
             )
         }
         composable("signUp") {
             SignUpScreen(
-                onSignInClick = { navController.navigate("quay lại signIn") },
-                onSignUpClick = { navController.navigate("signIn") }
-                )
-        }
-        composable("sign up") {
-            SignUpScreen(
-                onSignInClick = { navController.navigate("quay lại signIn") },
+                onSignInClick = { navController.navigate("signIn") },
                 onSignUpClick = { navController.navigate("signIn") }
             )
         }
-        composable("gửi mã otp") {
+        composable("sendOtp") {
             Porgot_pass(
-                onBackClick = { navController.navigate("quay lại màn signIn") },
-                onSendOtpClick = { navController.navigate("Enter OTP") }
-
+                onBackClick = { navController.navigate("signIn") },
+                onSendOtpClick = { navController.navigate("enterOtp") }
             )
         }
-        composable("quay lại màn signIN") {
-            signIn(
-                onforgot = { navController.navigate("gửi mã otp") },
-                onSignup = { navController.navigate("quay lại sign up") },
-                onSignin = { navController.navigate("Dashboard") }
-
-            )
-        }
-        composable("Enter OTP") {
+        composable("enterOtp") {
             EnterOtpScreen(
                 onResetClick = { navController.navigate("signIn") }
             )
@@ -63,12 +48,14 @@ fun AppNavigation() {
             Dashboard(
                 onBMI = { navController.navigate("BMI") },
                 onRight = { navController.navigate("Setting") },
-                onleft = { navController.navigate("Track")}
+                onleft = { navController.navigate("Track") }
             )
         }
         composable("BMI") {
             BmiCalculatorScreen(
-                onBMI = {navController.navigate("Bmi_Results")}
+                onBMI = { bmiValue ->
+                    navController.navigate("Details/${bmiValue}")
+                }
             )
         }
         composable("Setting") {
@@ -77,28 +64,50 @@ fun AppNavigation() {
                 onPrileclick = { navController.navigate("Profile") },
                 onSignOut = { navController.navigate("signIn") }
             )
-
         }
         composable("Track") {
             TrackScreen(
                 onleft = { navController.navigate("Dashboard") },
-                onCenter = { navController.navigate("DashBoard") },
-                onRight = { navController.navigate("Setting")}
+                onCenter = { navController.navigate("Dashboard") },
+                onRight = { navController.navigate("Setting") }
             )
         }
         composable("Profile") {
             profileSreen(
                 onBack = { navController.navigate("Setting") }
-                )
-        }
-        composable("Bmi_results"){
-            BmiResultScreen(
-                onDetails = {navController.navigate("Details")}
             )
         }
-        composable("Details"){
+
+        composable(
+            route = "Details/{bmi}",
+            arguments = listOf(navArgument("bmi") { type = NavType.FloatType })
+        ) { backStackEntry ->
+            val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
+            DetailsScreen(
+                bmi = bmi,
+                onResult = { bmiValue, category ->
+                    navController.navigate("Results/$bmiValue/$category")
+                }
+            )
         }
 
+        composable(
+            route = "Results/{bmi}/{category}",
+            arguments = listOf(
+                navArgument("bmi") { type = NavType.FloatType },
+                navArgument("category") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
+            val category = backStackEntry.arguments?.getString("category") ?: "Unknown"
+            ResultsScreen(
+                bmi = bmi,
+                category = category,
+                onHome = {
+                    // Từ Results quay lại Dashboard và lưu lịch sử nếu cần
+                    navController.navigate("Dashboard")
+                }
+            )
+        }
     }
 }
-

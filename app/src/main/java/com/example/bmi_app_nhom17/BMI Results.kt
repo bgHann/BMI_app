@@ -32,8 +32,15 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BmiResultScreen(
-    onDetails: () -> Unit
+    onDetails: () -> Unit,
+    bmi: Float
 ) {
+    val status = when {
+        bmi < 18.5 -> "Underweight"
+        bmi < 25 -> "Normal"
+        bmi < 30 -> "Overweight"
+        else -> "Obese"
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +64,7 @@ fun BmiResultScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            BmiCircularIndicator(bmi = 27.1f)
+            BmiCircularIndicator(bmi = bmi)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -65,7 +72,7 @@ fun BmiResultScreen(
                 buildAnnotatedString {
                     append("You have ")
                     withStyle(style = SpanStyle(color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)) {
-                        append("Overweight")
+                        append("$status")
                     }
                     append(" body weight!")
                 },
@@ -136,8 +143,11 @@ fun BmiCircularIndicator(bmi: Float) {
     }
 }
 
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun BmiResultsPreview(){
-    BmiResultScreen{}
+fun BmiResultsPreview() {
+    BmiResultScreen(
+        bmi = 24.5f,
+        onDetails = {}
+    )
 }

@@ -1,6 +1,7 @@
 package com.example.bmi_app_nhom17
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -9,13 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun ResultsScreen(
+    bmi: Float,
+    category: String,
     onHome: () -> Unit
 ) {
+    val title  = when {
+        bmi < 18.5 -> "Try to eat more nutritious meals and consult a nutritionist."
+        bmi < 24.9 -> "Maintain your current lifestyle with balanced diet and regular exercise."
+        bmi < 29.9 -> "Consider increasing physical activity and reducing high-calorie foods."
+        else ->"Consult a doctor or dietitian to create a safe weight loss plan."
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFFEFEFEF)
@@ -48,15 +59,24 @@ fun ResultsScreen(
                 tonalElevation = 2.dp,
                 shadowElevation = 4.dp
             ) {
-                Box(
+                Column(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.TopStart
+                        .fillMaxSize()
+                        .padding(20.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Nhận xét(sửa lại để nhận xét tự hiện theo chỉ số tính được)",
-                        fontSize = 16.sp,
+                        text = category,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = title,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Normal,
                         color = Color.Black
                     )
                 }
@@ -85,8 +105,13 @@ fun ResultsScreen(
     }
 }
 
-/*@Preview
+@Preview(showBackground = true)
 @Composable
 fun ResultPreview() {
-    ResultsScreen()
-}*/
+    ResultsScreen(
+        bmi = 22.5f,
+        category = "Healthy",
+        onHome = {}
+    )
+}
+

@@ -16,15 +16,21 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun DetailsScreen(
     bmi: Float,
-    category: String,
-    onResult: () -> Unit) {
+    onResult: (Float, String) -> Unit) {
+    val category = when {
+        bmi < 18.5 -> "Underweight"
+        bmi < 24.9 -> "Healthy"
+        bmi < 29.9 -> "Overweight"
+        else -> "Obese"
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("SUMMARY", style = MaterialTheme.typography.titleLarge)
+        Text("SUMMARY", style = MaterialTheme.typography.titleLarge, modifier = Modifier.align(
+            Alignment.CenterHorizontally))
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -53,8 +59,13 @@ fun DetailsScreen(
             }
         }
 
-        Button(onClick = onResult, modifier = Modifier.align(Alignment.CenterHorizontally)) {
-            Text("Results")
+        Button(
+            onClick = {onResult(bmi, category)},
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp)
+        ) {
+            Text("Results", Modifier.size(56.dp))
         }
     }
 }
@@ -79,8 +90,7 @@ fun DetailsPreview() {
     MaterialTheme {
         DetailsScreen(
             bmi = 23.5f,
-            category = "Healthy",
-            onResult = {}
+            onResult = {bmi, category -> println("$bmi, $category")}
         )
     }
 }
