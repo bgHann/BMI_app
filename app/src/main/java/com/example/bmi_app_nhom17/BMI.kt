@@ -21,6 +21,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 
 @Composable
 fun BmiCalculatorScreen(
@@ -44,10 +45,10 @@ fun BmiCalculatorScreen(
         ) {
             Text(
                 text = "BMI CALCULATOR",
-                fontSize = 20.sp,
+                fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 20.dp)
             )
 
             Box(
@@ -61,7 +62,7 @@ fun BmiCalculatorScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Malecart("Woman", R.drawable.femenine, !isMale) { isMale = false }
-                    Malecart("Man", R.drawable.masculine, isMale) { isMale = true }
+                    Malecart("Man", R.drawable.man, isMale) { isMale = true }
                 }
             }
 
@@ -132,7 +133,7 @@ fun BmiCalculatorScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp),
+                    .height(83.dp),
                 shape = RoundedCornerShape(30.dp),
                 elevation = ButtonDefaults.buttonElevation(8.dp)
             ) {
@@ -205,7 +206,7 @@ fun ValueCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(8.dp).size(177.dp,216.dp),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF2F2F2))
     ) {
@@ -213,14 +214,19 @@ fun ValueCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(label, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-            Text("$value", fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)
+            Text(label, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text("$value", fontSize = 60.sp, fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top =15.dp ))
+            Spacer(modifier= Modifier.size(18.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 CircleButton(icon = plusIcon) { onIncrease() }
                 CircleButton(icon = minusIcon) { onDecrease() }
+
+
+
             }
         }
     }
@@ -234,10 +240,11 @@ fun CircleButton(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(50.dp)
-            .background(Color(0xFF6C63FF), CircleShape)
+            .size(49.dp)
+            .background(BackgroudButon, CircleShape)
             .clickable { onClick() }
     ) {
+
         Icon(
             painter = painterResource(id = icon),
             contentDescription = null,
