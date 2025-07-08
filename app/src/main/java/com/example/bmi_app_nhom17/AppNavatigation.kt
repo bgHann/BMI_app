@@ -15,11 +15,13 @@ fun AppNavigation() {
                 onNextClick = { navController.navigate("welcome") }
             )
         }
+
         composable("welcome") {
             WelcomeScreen(
                 onStartClick = { navController.navigate("signIn") }
             )
         }
+
         composable("signIn") {
             signIn(
                 onSignup = { navController.navigate("signUp") },
@@ -27,23 +29,27 @@ fun AppNavigation() {
                 onSignin = { navController.navigate("Dashboard") }
             )
         }
+
         composable("signUp") {
             SignUpScreen(
                 onSignInClick = { navController.navigate("signIn") },
                 onSignUpClick = { navController.navigate("signIn") }
             )
         }
+
         composable("sendOtp") {
             Porgot_pass(
                 onBackClick = { navController.navigate("signIn") },
                 onSendOtpClick = { navController.navigate("enterOtp") }
             )
         }
+
         composable("enterOtp") {
             EnterOtpScreen(
                 onResetClick = { navController.navigate("signIn") }
             )
         }
+
         composable("Dashboard") {
                 backStackEntry ->
             val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
@@ -55,6 +61,7 @@ fun AppNavigation() {
                 onleft = { navController.navigate("Tracks/${bmi}/${category}/${title}") }
             )
         }
+
         composable("BMI") {
             BmiCalculatorScreen(
                 onBMI = { bmiValue ->
@@ -62,6 +69,7 @@ fun AppNavigation() {
                 }
             )
         }
+
         composable("Setting") {
             settingScreen(
                 onCenter = { navController.navigate("Dashboard") },
@@ -71,6 +79,7 @@ fun AppNavigation() {
                 onleft = {navController.navigate("Tracks")}
             )
         }
+
         composable(
             route = "Tracks/{bmi}/{category}/{title}",
             arguments = listOf(
@@ -92,6 +101,7 @@ fun AppNavigation() {
                 onRight = { navController.navigate("Setting") }
             )
         }
+
         composable("Profile") {
             profileSreen(
                 onBack = { navController.navigate("Setting") }
