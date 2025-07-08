@@ -131,13 +131,11 @@ fun AppNavigation() {
         }
 
         composable("Notification") {
-            // Danh sách thông báo giả lập - bạn có thể thay bằng danh sách thực tế từ ViewModel hoặc Repository
             val dummyNotifications = listOf(
                 NotificationItem(1, "Thông báo 1", "Bạn có tin nhắn mới", "10:00 AM"),
                 NotificationItem(2, "Thông báo 2", "Cập nhật hệ thống", "11:30 AM"),
                 NotificationItem(3, "Thông báo 3", "Sự kiện sắp diễn ra", "12:45 PM")
             )
-
             NotificationScreen(
                 notifications = dummyNotifications,
                 onBack = {
@@ -147,6 +145,27 @@ fun AppNavigation() {
                     navController.navigate(
                         "NotificationDetail/${notification.titles}/${notification.message}/${notification.time}"
                     )
+                }
+            )
+        }
+
+        composable(
+            "NotificationDetail/{titles}/{message}/{time}",
+            arguments = listOf(
+                navArgument("titles") { type = NavType.StringType },
+                navArgument("message") { type = NavType.StringType },
+                navArgument("time") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val titles = backStackEntry.arguments?.getString("titles") ?: ""
+            val message = backStackEntry.arguments?.getString("message") ?: ""
+            val time = backStackEntry.arguments?.getString("time") ?: ""
+            NotificationDetailScreen(
+                titles = titles,
+                message = message,
+                time = time,
+                onBack = {
+                    navController.popBackStack()
                 }
             )
         }
