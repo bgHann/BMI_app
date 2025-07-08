@@ -66,7 +66,9 @@ fun AppNavigation() {
             settingScreen(
                 onCenter = { navController.navigate("Dashboard") },
                 onPrileclick = { navController.navigate("Profile") },
-                onSignOut = { navController.navigate("signIn") }
+                onSignOut = { navController.navigate("signIn") },
+                onNotifications = {navController.navigate("Notification")},
+                onleft = {navController.navigate("Tracks")}
             )
         }
         composable(
@@ -124,6 +126,27 @@ fun AppNavigation() {
                 onHome = {
                     // Từ Results quay lại Dashboard và lưu lịch sử nếu cần
                     navController.navigate("Dashboard")
+                }
+            )
+        }
+
+        composable("Notification") {
+            // Danh sách thông báo giả lập - bạn có thể thay bằng danh sách thực tế từ ViewModel hoặc Repository
+            val dummyNotifications = listOf(
+                NotificationItem(1, "Thông báo 1", "Bạn có tin nhắn mới", "10:00 AM"),
+                NotificationItem(2, "Thông báo 2", "Cập nhật hệ thống", "11:30 AM"),
+                NotificationItem(3, "Thông báo 3", "Sự kiện sắp diễn ra", "12:45 PM")
+            )
+
+            NotificationScreen(
+                notifications = dummyNotifications,
+                onBack = {
+                    navController.popBackStack()
+                },
+                onClickItem = { notification ->
+                    navController.navigate(
+                        "NotificationDetail/${notification.titles}/${notification.message}/${notification.time}"
+                    )
                 }
             )
         }
