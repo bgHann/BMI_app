@@ -29,9 +29,8 @@ fun BmiResultScreen(
     category: String,
     onDetails: (Float) -> Unit,
     onHome: () -> Unit,
-    viewModel: BmiViewModel
+    viewModel: BmiViewModel = viewModel()
 ) {
-    // ✅ Hiển thị lời khuyên phù hợp
     val comment = when (category) {
         "Underweight" -> "Bạn nên ăn uống đầy đủ hơn!"
         "Normal" -> "Tiếp tục duy trì nhé!"
@@ -40,11 +39,9 @@ fun BmiResultScreen(
         else -> "Không xác định"
     }
 
-    // ✅ Lưu lịch sử BMI và lời khuyên
     LaunchedEffect(Unit) {
         viewModel.addBmiRecord(bmi, category, comment)
     }
-
 
     Box(
         modifier = Modifier
@@ -82,6 +79,22 @@ fun BmiResultScreen(
                 },
                 color = Color.Black,
                 fontSize = 16.sp
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // ✅ THÊM: Hiển thị lời khuyên
+            Text(
+                text = "Lời khuyên:",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = Color.Black
+            )
+            Text(
+                text = comment,
+                fontSize = 14.sp,
+                color = Color.DarkGray,
+                modifier = Modifier.padding(top = 4.dp, start = 8.dp, end = 8.dp),
             )
 
             Spacer(modifier = Modifier.height(24.dp))
