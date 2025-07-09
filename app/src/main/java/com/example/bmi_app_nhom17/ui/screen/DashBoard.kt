@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -22,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.bmi_app_nhom17.R
+import com.example.bmi_app_nhom17.viewmodel.bottom_design
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 
 @Composable
@@ -72,7 +74,7 @@ fun Dashboard (
                 }
             }
             Spacer(modifier = Modifier.size(390.dp))
-            bottom_design(onleft,onCenter,onRight)
+            bottom_design(onleft, onCenter, onRight)
 
                 }
             }

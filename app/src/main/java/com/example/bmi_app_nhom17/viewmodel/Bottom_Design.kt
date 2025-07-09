@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.viewmodel
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,8 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.bmi_app_nhom17.R
+
 @Composable
 fun bottom_design(
     onleft : ()-> Unit,

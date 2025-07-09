@@ -1,8 +1,6 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
 import android.content.Context
-import android.provider.ContactsContract
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

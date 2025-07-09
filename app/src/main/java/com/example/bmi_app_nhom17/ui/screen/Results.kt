@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +26,6 @@ fun ResultsScreen(
         bmi < 29.9 -> "Consider increasing physical activity and reducing high-calorie foods."
         else ->"Consult a doctor or dietitian to create a safe weight loss plan."
     }
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFFEFEFEF)

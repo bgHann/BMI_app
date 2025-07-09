@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

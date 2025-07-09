@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
@@ -21,15 +21,18 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bmi_app_nhom17.R
+import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
 
 @Composable
 fun BmiCalculatorScreen(
+    viewModel: BmiViewModel = viewModel(),
     onBMI: (Float) -> Unit
 ) {
     var isMale by remember { mutableStateOf(true) }
-    var height by remember { mutableStateOf(155f) }
-    var weight by remember { mutableStateOf(65) }
+    val height = viewModel.height
+    val weight = viewModel.weight
     var age by remember { mutableStateOf(24) }
 
     Surface(
@@ -45,10 +48,10 @@ fun BmiCalculatorScreen(
         ) {
             Text(
                 text = "BMI CALCULATOR",
-                fontSize = 25.sp,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(top = 20.dp)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
             Box(
@@ -62,7 +65,7 @@ fun BmiCalculatorScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Malecart("Woman", R.drawable.femenine, !isMale) { isMale = false }
-                    Malecart("Man", R.drawable.man, isMale) { isMale = true }
+                    Malecart("Man", R.drawable.masculine, isMale) { isMale = true }
                 }
             }
 
@@ -88,7 +91,7 @@ fun BmiCalculatorScreen(
                     )
                     Slider(
                         value = height,
-                        onValueChange = { height = it },
+                        onValueChange = { viewModel.height = it },
                         valueRange = 100f..220f,
                         colors = SliderDefaults.colors(
                             thumbColor = Color(0xFF6C63FF),
@@ -106,8 +109,8 @@ fun BmiCalculatorScreen(
                 ValueCard(
                     label = "WEIGHT",
                     value = weight,
-                    onIncrease = { weight++ },
-                    onDecrease = { if (weight > 1) weight-- },
+                    onIncrease = { viewModel.increaseWeight() },
+                    onDecrease = { viewModel.decreaseWeight() },
                     plusIcon = R.drawable.plus,
                     minusIcon = R.drawable.minus,
                     modifier = Modifier.weight(1f)
@@ -126,14 +129,13 @@ fun BmiCalculatorScreen(
 
             Button(
                 onClick = {
-                    val heightm = height /100
-                    val bmi = weight / (heightm * heightm)
+                    val bmi = viewModel.calculateBmi()
                     onBMI(bmi)
                           },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(83.dp),
+                    .height(60.dp),
                 shape = RoundedCornerShape(30.dp),
                 elevation = ButtonDefaults.buttonElevation(8.dp)
             ) {
@@ -142,6 +144,7 @@ fun BmiCalculatorScreen(
         }
     }
 }
+
 
 @Composable
 fun Malecart(
@@ -206,7 +209,7 @@ fun ValueCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.padding(8.dp).size(177.dp,216.dp),
+        modifier = modifier.padding(8.dp),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFF2F2F2))
     ) {
@@ -214,19 +217,14 @@ fun ValueCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(16.dp)
         ) {
-            Text(label, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            Text("$value", fontSize = 60.sp, fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top =15.dp ))
-            Spacer(modifier= Modifier.size(18.dp))
+            Text(label, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text("$value", fontSize = 32.sp, fontWeight = FontWeight.ExtraBold)
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 CircleButton(icon = plusIcon) { onIncrease() }
                 CircleButton(icon = minusIcon) { onDecrease() }
-
-
-
             }
         }
     }
@@ -240,11 +238,10 @@ fun CircleButton(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(49.dp)
-            .background(BackgroudButon, CircleShape)
+            .size(50.dp)
+            .background(Color(0xFF6C63FF), CircleShape)
             .clickable { onClick() }
     ) {
-
         Icon(
             painter = painterResource(id = icon),
             contentDescription = null,

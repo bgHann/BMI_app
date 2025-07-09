@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,23 +15,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bmi_app_nhom17.data.model.NotificationItem
+import com.example.bmi_app_nhom17.viewmodel.NotificationViewModel
 
-
-// Dữ liệu mẫu cho mỗi thông báo
-data class NotificationItem(
-    val id: Int,
-    val titles: String,
-    val message: String,
-    val time: String
-)
-
-// Giao diện chính hiển thị danh sách thông báo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationScreen(
-    notifications: List<NotificationItem>,
+    viewModel: NotificationViewModel = viewModel(),
     onBack: () -> Unit = {},
-    onClickItem: (NotificationItem) -> Unit = {}
+    onClickItem: (String) -> Unit = {}
 ) {
     Scaffold(
         topBar = {
@@ -51,16 +44,14 @@ fun NotificationScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Duyệt qua từng phần tử trong danh sách để tạo thẻ thông báo
-            items(notifications, key = { it.id }) { notification ->
-                NotificationCard(notification, onClick = { onClickItem(notification) })
+            items(viewModel.notifications, key = { it.id }) { notification ->
+                NotificationCard(notification, onClick = { onClickItem(notification.message) })
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
 }
 
-// Giao diện mỗi thẻ thông báo
 @Composable
 fun NotificationCard(notification: NotificationItem, onClick: () -> Unit) {
     Card(
@@ -77,7 +68,6 @@ fun NotificationCard(notification: NotificationItem, onClick: () -> Unit) {
     }
 }
 
-// Xem thử trước trong Android Studio
 @Preview(showBackground = true)
 @Composable
 fun NotificationPreview() {
@@ -85,8 +75,8 @@ fun NotificationPreview() {
         NotificationItem(1, "Chỉ số BMI mới nhất", "Bạn vừa tính BMI: 22.5", "04/07/2025 10:00"),
         NotificationItem(2, "Lời khuyên sức khỏe", "Uống đủ nước mỗi ngày!", "03/07/2025 18:00")
     )
-
-    NotificationScreen(
-        notifications = sampleNotifications
-    )
+    val text = object : NotificationViewModel() {
+        init { notifications = sampleNotifications }
+    }
+    NotificationScreen(viewModel = text)
 }

@@ -1,6 +1,5 @@
-package com.example.bmi_app_nhom17
+package com.example.bmi_app_nhom17.ui.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 import android.content.Context
-import android.provider.Settings.Global.putString
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
