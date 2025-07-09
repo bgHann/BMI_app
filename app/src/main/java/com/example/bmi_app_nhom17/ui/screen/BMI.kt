@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bmi_app_nhom17.R
-import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
+import com.example.bmi_app_nhom17.viewmodel.BmiViewModel // ✅ THÊM DÒNG NÀY
 
 @Composable
 fun BmiCalculatorScreen(
@@ -91,7 +91,7 @@ fun BmiCalculatorScreen(
                     )
                     Slider(
                         value = height,
-                        onValueChange = { viewModel.height = it },
+                        onValueChange = { viewModel.height = it }, // ✅ Câu này chỉ đúng khi height là `var`
                         valueRange = 100f..220f,
                         colors = SliderDefaults.colors(
                             thumbColor = Color(0xFF6C63FF),
@@ -131,7 +131,7 @@ fun BmiCalculatorScreen(
                 onClick = {
                     val bmi = viewModel.calculateBmi()
                     onBMI(bmi)
-                          },
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -144,8 +144,6 @@ fun BmiCalculatorScreen(
         }
     }
 }
-
-
 @Composable
 fun Malecart(
     label: String,
@@ -162,7 +160,6 @@ fun Malecart(
             .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // KHÔNG chồng icon lên card bên trong nữa → tránh tạo khung vuông xám
         Card(
             shape = RoundedCornerShape(24.dp),
             border = BorderStroke(2.dp, borderColor),
@@ -178,7 +175,7 @@ fun Malecart(
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = label,
-                    tint = Color.Unspecified, // giữ nguyên màu gradient gốc
+                    tint = Color.Unspecified,
                     modifier = Modifier.size(80.dp)
                 )
             }
@@ -186,7 +183,6 @@ fun Malecart(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Chỉ giữ 1 dòng text chính
         Text(
             text = label,
             fontWeight = FontWeight.Bold,
@@ -195,9 +191,6 @@ fun Malecart(
         )
     }
 }
-
-
-
 @Composable
 fun ValueCard(
     label: String,
@@ -229,7 +222,6 @@ fun ValueCard(
         }
     }
 }
-
 @Composable
 fun CircleButton(
     @DrawableRes icon: Int,
@@ -249,10 +241,4 @@ fun CircleButton(
             modifier = Modifier.size(50.dp)
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BmiCalculatorScreenPreview() {
-    BmiCalculatorScreen(onBMI = {})
 }

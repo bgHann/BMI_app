@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -12,25 +14,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
 
 @Composable
 fun DetailsScreen(
     bmi: Float,
-    onResult: (Float, String) -> Unit) {
-    val category = when {
-        bmi < 18.5 -> "Underweight"
-        bmi < 24.9 -> "Healthy"
-        bmi < 29.9 -> "Overweight"
-        else -> "Obese"
-    }
+    onResult: (Float, String) -> Unit,
+    viewModel: BmiViewModel = viewModel()
+) {
+    val category = viewModel.getCategory(bmi)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("SUMMARY", style = MaterialTheme.typography.titleLarge, modifier = Modifier.align(
-            Alignment.CenterHorizontally))
+        Text(
+            "SUMMARY",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -40,8 +46,13 @@ fun DetailsScreen(
             colors = CardDefaults.cardColors(containerColor = Color(0xFFF2F2F2)),
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
-            Text("Your BMI: %.1f  %s".format(bmi, category), fontSize = 24.sp)
+            Text(
+                "Your BMI: %.1f  %s".format(bmi, category),
+                fontSize = 24.sp,
+                modifier = Modifier.padding(16.dp)
+            )
         }
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,12 +71,15 @@ fun DetailsScreen(
         }
 
         Button(
-            onClick = {onResult(bmi, category)},
+            onClick = {
+                viewModel.addBmiRecord(bmi, category, "No comment") // bạn có thể thay "No comment" bằng mô tả thật
+                onResult(bmi, category)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp)
         ) {
-            Text("Results", Modifier.size(56.dp))
+            Text("Results")
         }
     }
 }
@@ -90,8 +104,7 @@ fun DetailsPreview() {
     MaterialTheme {
         DetailsScreen(
             bmi = 23.5f,
-            onResult = {bmi, category -> println("$bmi, $category")}
+            onResult = { bmi, category -> println("$bmi, $category") }
         )
     }
 }
-

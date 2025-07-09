@@ -6,42 +6,23 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import com.example.bmi_app_nhom17.data.model.NotificationItem
-import com.example.bmi_app_nhom17.ui.screen.BmiCalculatorScreen
-import com.example.bmi_app_nhom17.ui.screen.BmiResultScreen
-import com.example.bmi_app_nhom17.ui.screen.Dashboard
-import com.example.bmi_app_nhom17.ui.screen.DetailsScreen
-import com.example.bmi_app_nhom17.ui.screen.EnterOtpScreen
-import com.example.bmi_app_nhom17.ui.screen.NotificationDetailScreen
-import com.example.bmi_app_nhom17.ui.screen.NotificationScreen
-import com.example.bmi_app_nhom17.ui.screen.Porgot_pass
-import com.example.bmi_app_nhom17.ui.screen.ResultsScreen
-import com.example.bmi_app_nhom17.ui.screen.SignUpScreen
-import com.example.bmi_app_nhom17.ui.screen.TrackScreen
-import com.example.bmi_app_nhom17.ui.screen.WelcomeScreen
-import com.example.bmi_app_nhom17.ui.screen.frame1
-import com.example.bmi_app_nhom17.ui.screen.profileSreen
-import com.example.bmi_app_nhom17.ui.screen.settingScreen
-import com.example.bmi_app_nhom17.ui.screen.signIn
-import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
+import com.example.bmi_app_nhom17.ui.screen.*
 import com.example.bmi_app_nhom17.viewmodel.NotificationViewModel
+import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     val bmiViewModel: BmiViewModel = viewModel()
-    val NotificationViewModel: NotificationViewModel = viewModel()
+    val notificationViewModel: NotificationViewModel = viewModel() // ✅ sửa tên biến
 
     NavHost(navController = navController, startDestination = "frame1") {
         composable("frame1") {
-            frame1(
-                onNextClick = { navController.navigate("welcome") }
-            )
+            frame1(onNextClick = { navController.navigate("welcome") })
         }
 
         composable("welcome") {
-            WelcomeScreen(
-                onStartClick = { navController.navigate("signIn") }
-            )
+            WelcomeScreen(onStartClick = { navController.navigate("signIn") })
         }
 
         composable("signIn") {
@@ -67,40 +48,47 @@ fun AppNavigation() {
         }
 
         composable("enterOtp") {
-            EnterOtpScreen(
-                onResetClick = { navController.navigate("signIn") }
-            )
+            EnterOtpScreen(onResetClick = { navController.navigate("signIn") })
         }
 
-        composable("Dashboard") {
-                backStackEntry ->
+        composable("Dashboard") { backStackEntry ->
             val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
             val category = backStackEntry.arguments?.getString("category") ?: "Unknown"
             val title = backStackEntry.arguments?.getString("title") ?: "title"
+
             Dashboard(
                 onBMI = { navController.navigate("BMI") },
                 onRight = { navController.navigate("Setting") },
-                onleft = { navController.navigate("Tracks/${bmi}/${category}/${title}") }
+                onleft = { navController.navigate("Tracks/$bmi/$category/$title") }
             )
         }
 
         composable("BMI") {
             BmiCalculatorScreen(
+                viewModel = bmiViewModel, // ✅ thêm dòng này
                 onBMI = { bmi ->
-                    navController.navigate("Bmi_Result/${bmi}")
+                    navController.navigate("Bmi_Result/$bmi")
                 }
             )
         }
 
-        composable(route = "Bmi_Result/{bmi}",
-                arguments = listOf(navArgument("bmi") { type = NavType.FloatType })
+        composable(
+            route = "Bmi_Result/{bmi}",
+            arguments = listOf(navArgument("bmi") { type = NavType.FloatType })
         ) { backStackEntry ->
             val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
+            val category = bmiViewModel.getCategory(bmi) // lấy từ ViewModel
+
             BmiResultScreen(
                 bmi = bmi,
-                onDetails = {bmi -> navController.navigate("Details/${bmi}")}
+                category = category,             // ✅ thêm dòng này
+                onDetails = { bmiValue -> navController.navigate("Details/$bmiValue") },
+                onHome = { navController.navigate("Dashboard") },
+                viewModel = bmiViewModel         // ✅ thêm dòng này
             )
+
         }
+
 
         composable("Setting") {
             settingScreen(
@@ -108,7 +96,7 @@ fun AppNavigation() {
                 onPrileclick = { navController.navigate("Profile") },
                 onSignOut = { navController.navigate("signIn") },
                 onNotifications = { navController.navigate("Notification") },
-                onleft = { navController.navigate("Tracks") }
+                onleft = { navController.navigate("Tracks/0.0/Unknown/title") } // mặc định nếu chưa có
             )
         }
 
@@ -127,17 +115,17 @@ fun AppNavigation() {
             TrackScreen(
                 bmi = bmi,
                 category = category,
-                titles = title,
+                title = title,
                 onleft = { navController.navigate("Dashboard") },
                 onCenter = { navController.navigate("Dashboard") },
-                onRight = { navController.navigate("Setting") }
+                onRight = { navController.navigate("Setting") },
+                viewModel = bmiViewModel // ✅ thêm dòng này
             )
+
         }
 
         composable("Profile") {
-            profileSreen(
-                onBack = { navController.navigate("Setting") }
-            )
+            profileSreen(onBack = { navController.navigate("Setting") })
         }
 
         composable(
@@ -148,33 +136,35 @@ fun AppNavigation() {
             DetailsScreen(
                 bmi = bmi,
                 onResult = { bmiValue, category ->
-                    navController.navigate("Results/${bmiValue}/${category}")
-                }
+                    navController.navigate("Results/$bmiValue/$category")
+                },
+                viewModel = bmiViewModel // ✅ thêm nếu cần
             )
+
         }
 
         composable(
             route = "Results/{bmi}/{category}",
             arguments = listOf(
                 navArgument("bmi") { type = NavType.FloatType },
-                navArgument("category") { type = NavType.StringType },
+                navArgument("category") { type = NavType.StringType }
             )
         ) { backStackEntry ->
             val bmi = backStackEntry.arguments?.getFloat("bmi") ?: 0f
-            val category = backStackEntry.arguments?.getString("category") ?: "Unknown"
-            ResultsScreen(
+            val category = bmiViewModel.getCategory(bmi) // hoặc lấy từ Result trước đó nếu có
+
+            BmiResultScreen(
                 bmi = bmi,
-                category = category,
-                onHome = {
-                    navController.navigate("Dashboard")
-                }
+                category = category, // ✅ truyền vào
+                onDetails = { bmiValue -> navController.navigate("Details/$bmiValue") },
+                onHome = { navController.navigate("Dashboard") },
+                viewModel = bmiViewModel
             )
+
+
         }
 
-
         composable("Notification") {
-            val notificationViewModel: NotificationViewModel = viewModel()
-
             notificationViewModel.notifications = listOf(
                 NotificationItem(1, "Thông báo 1", "Bạn có tin nhắn mới", "10:00 AM"),
                 NotificationItem(2, "Thông báo 2", "Cập nhật hệ thống", "11:30 AM"),
@@ -194,18 +184,18 @@ fun AppNavigation() {
         }
 
         composable(
-            "NotificationDetail/{titles}/{message}/{time}",
+            "NotificationDetail/{title}/{message}/{time}",
             arguments = listOf(
-                navArgument("titles") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType },
                 navArgument("message") { type = NavType.StringType },
                 navArgument("time") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val titles = backStackEntry.arguments?.getString("titles") ?: ""
+            val title = backStackEntry.arguments?.getString("title") ?: ""
             val message = backStackEntry.arguments?.getString("message") ?: ""
             val time = backStackEntry.arguments?.getString("time") ?: ""
             NotificationDetailScreen(
-                titles = titles,
+                titles = title,
                 message = message,
                 time = time,
                 onBack = {
