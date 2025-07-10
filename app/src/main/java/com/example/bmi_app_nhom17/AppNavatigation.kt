@@ -48,7 +48,11 @@ fun AppNavigation() {
         }
 
         composable("enterOtp") {
-            EnterOtpScreen(onResetClick = { navController.navigate("signIn") })
+            EnterOtpScreen(onResetClick = { navController.navigate("comfirmPass") })
+        }
+
+        composable("comfirmPass") {
+            ComfirmPassworkScreen(onComfirmClick = {navController.navigate("signIn")})
         }
 
         composable("Dashboard") { backStackEntry ->
