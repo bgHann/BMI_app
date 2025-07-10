@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,20 +28,7 @@ fun BmiResultScreen(
     bmi: Float,
     category: String,
     onDetails: (Float) -> Unit,
-    onHome: () -> Unit,
-    viewModel: BmiViewModel = viewModel()
 ) {
-    val comment = when (category) {
-        "Underweight" -> "Bạn nên ăn uống đầy đủ hơn!"
-        "Normal" -> "Tiếp tục duy trì nhé!"
-        "Overweight" -> "Hãy chú ý chế độ ăn và vận động!"
-        "Obese" -> "Cần kiểm soát cân nặng!"
-        else -> "Không xác định"
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.addBmiRecord(bmi, category, comment)
-    }
 
     Box(
         modifier = Modifier
@@ -55,8 +42,9 @@ fun BmiResultScreen(
             verticalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxSize()
         ) {
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "KẾT QUẢ BMI",
+                text = "BMI Result",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 color = Color.Black,
@@ -71,36 +59,20 @@ fun BmiResultScreen(
 
             Text(
                 buildAnnotatedString {
-                    append("Bạn đang ở trạng thái ")
+                    append("You have ")
                     withStyle(style = SpanStyle(color = Color(0xFF6C63FF), fontWeight = FontWeight.Bold)) {
-                        append(category)
+                        append("$category")
                     }
-                    append("!")
+                    append(" body weight!")
                 },
                 color = Color.Black,
-                fontSize = 16.sp
+                fontSize = 24.sp
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // ✅ THÊM: Hiển thị lời khuyên
-            Text(
-                text = "Lời khuyên:",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                color = Color.Black
-            )
-            Text(
-                text = comment,
-                fontSize = 14.sp,
-                color = Color.DarkGray,
-                modifier = Modifier.padding(top = 4.dp, start = 8.dp, end = 8.dp),
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(48.dp))
 
             Button(
-                onClick = onHome,
+                onClick = {onDetails(bmi)},
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 shape = RoundedCornerShape(24.dp),
                 modifier = Modifier
@@ -109,7 +81,7 @@ fun BmiResultScreen(
                     .shadow(10.dp, shape = RoundedCornerShape(24.dp), clip = false)
             ) {
                 Text(
-                    text = "Quay về Trang chủ",
+                    text = "Details",
                     color = Color.White,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
@@ -157,4 +129,14 @@ fun BmiCircularIndicator(bmi: Float) {
             color = Color.Black
         )
     }
+}
+
+@Preview
+@Composable
+fun BmiResultPreview(){
+    BmiResultScreen(
+        bmi = 23.2f,
+        category = "Normal",
+        onDetails = {},
+    )
 }

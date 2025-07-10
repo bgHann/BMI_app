@@ -1,16 +1,14 @@
 package com.example.bmi_app_nhom17.ui.screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bmi_app_nhom17.data.model.BmiRecord
+import com.example.bmi_app_nhom17.model.BmiRecord
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 import com.example.bmi_app_nhom17.viewmodel.bottom_design
 import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
@@ -20,9 +18,6 @@ fun TrackScreen(
     onleft: () -> Unit = {},
     onCenter: () -> Unit = {},
     onRight: () -> Unit = {},
-    bmi: Float,
-    category: String,
-    title: String,
     viewModel: BmiViewModel = viewModel()
 ) {
     val bmiHistory by viewModel.bmiHistory.collectAsState()
@@ -34,7 +29,7 @@ fun TrackScreen(
                 .padding(horizontal = 15.dp)
         ) {
             Text(
-                text = "Lịch sử 3 lần đo BMI gần nhất:",
+                text = "History of the 3 most recent BMI measurements:",
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.Black,
                 modifier = Modifier.padding(top = 100.dp)
@@ -67,22 +62,17 @@ fun BmiHistoryItem(record: BmiRecord, index: Int) {
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Text(
-                text = "Lần ${index + 1}",
-                style = MaterialTheme.typography.titleSmall,
-                color = Color.Black
-            )
-            Text(
                 text = "BMI: ${String.format("%.1f", record.bmi)}",
                 style = MaterialTheme.typography.titleMedium,
                 color = Color(0xFF6C63FF)
             )
             Text(
-                text = "Tình trạng: ${record.category}",
+                text = "Status: ${record.category}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.DarkGray
             )
             Text(
-                text = "Ghi chú: ${record.comment}",
+                text = "Comment: ${record.comment}",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )

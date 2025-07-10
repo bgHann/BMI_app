@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotificationDetailScreen(

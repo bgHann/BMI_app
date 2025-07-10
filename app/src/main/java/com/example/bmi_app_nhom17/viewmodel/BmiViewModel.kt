@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.bmi_app_nhom17.data.model.BmiRecord
+import com.example.bmi_app_nhom17.model.BmiRecord
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -26,6 +26,15 @@ class BmiViewModel : ViewModel() {
             bmi < 25 -> "Normal"
             bmi < 30 -> "Overweight"
             else -> "Obese"
+        }
+    }
+
+    fun getComment(bmi: Float): String {
+        return when {
+            bmi < 18.5 -> "Try to eat more nutritious meals and consult a nutritionist."
+            bmi < 24.9 -> "Maintain your current lifestyle with balanced diet and regular exercise."
+            bmi < 29.9 -> "Consider increasing physical activity and reducing high-calorie foods."
+            else ->"Consult a doctor or dietitian to create a safe weight loss plan."
         }
     }
 

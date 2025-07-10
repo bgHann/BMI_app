@@ -16,7 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Icon
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.bmi_app_nhom17.data.model.NotificationItem
+import com.example.bmi_app_nhom17.model.NotificationItem
 import com.example.bmi_app_nhom17.viewmodel.NotificationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

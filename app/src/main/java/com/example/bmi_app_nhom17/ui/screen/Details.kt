@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -31,6 +29,7 @@ fun DetailsScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             "SUMMARY",
             style = MaterialTheme.typography.titleLarge,
@@ -81,6 +80,7 @@ fun DetailsScreen(
         ) {
             Text("Results")
         }
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 

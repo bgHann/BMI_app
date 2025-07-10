@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -13,19 +14,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.bmi_app_nhom17.viewmodel.BmiViewModel
 
 @Composable
 fun ResultsScreen(
     bmi: Float,
     category: String,
-    onHome: () -> Unit
+    onHome: () -> Unit,
+    viewModel: BmiViewModel = viewModel()
 ) {
-    val title  = when {
+    val comment = when {
         bmi < 18.5 -> "Try to eat more nutritious meals and consult a nutritionist."
         bmi < 24.9 -> "Maintain your current lifestyle with balanced diet and regular exercise."
         bmi < 29.9 -> "Consider increasing physical activity and reducing high-calorie foods."
         else ->"Consult a doctor or dietitian to create a safe weight loss plan."
     }
+
+    LaunchedEffect(Unit) {
+        viewModel.addBmiRecord(bmi, category, comment)
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFFEFEFEF)
@@ -73,7 +82,7 @@ fun ResultsScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = title,
+                        text = comment,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Normal,
                         color = Color.Black

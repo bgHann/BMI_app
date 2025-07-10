@@ -1,4 +1,4 @@
-package com.example.bmi_app_nhom17.data.model
+package com.example.bmi_app_nhom17.model
 
 data class NotificationItem(
     val id: Int,
