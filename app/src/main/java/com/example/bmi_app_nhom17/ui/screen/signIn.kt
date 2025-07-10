@@ -27,6 +27,8 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.example.bmi_app_nhom17.model.UserCredentialManager
+
 
 
 @Composable
@@ -43,8 +45,8 @@ fun signIn(
 
     val context = LocalContext.current
     val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-    val savedEmail = sharedPref.getString("email", null)
-    val savedPassword = sharedPref.getString("password", null)
+    val credentialManager = remember { UserCredentialManager(context) }
+    val storedPassword = credentialManager.getPassword(email)
 
     Surface(
         modifier = Modifier
@@ -98,16 +100,17 @@ fun signIn(
 
             Button(
                 onClick = {
-                    if (email == savedEmail && pass == savedPassword) {
+                    val storedPassword = credentialManager.getPassword(email)
+                    if (storedPassword != null && pass == storedPassword) {
                         with(sharedPref.edit()) {
                             putString("username", email)
                             apply()
                         }
                         onSignin()
-                    } else{
+                    } else {
                         Toast.makeText(context, "Email hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show()
                     }
-                          },
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(83.dp),

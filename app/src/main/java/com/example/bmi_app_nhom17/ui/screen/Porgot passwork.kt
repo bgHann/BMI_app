@@ -1,5 +1,6 @@
 package com.example.bmi_app_nhom17.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,21 +10,29 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.bmi_app_nhom17.model.LocalOtpManager
+import com.example.bmi_app_nhom17.model.OtpUtil
 import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
+import com.example.bmi_app_nhom17.viewmodel.sendOtpEmail
 
 @Composable
 fun Porgot_pass(
     onBackClick: () -> Unit = {},
-    onSendOtpClick: () -> Unit = {}, )
+    onOtpSent: (String) -> Unit = {}
+    )
 {
     val focusManager = LocalFocusManager.current
     var email by remember { mutableStateOf(TextFieldValue("")) }
+    val context = LocalContext.current
+    val otpManager = remember { LocalOtpManager(context) }
+
     Surface(modifier = Modifier.fillMaxSize()
         .clickable {focusManager.clearFocus() }, color = BackgroudColor) {
         Column(modifier = Modifier.padding(top = 25.dp, start = 20.dp
@@ -88,7 +97,17 @@ fun Porgot_pass(
 
                 // Send OTP button
                 Button(
-                    onClick = onSendOtpClick,
+                    onClick = {
+                        if (email.text.isNotBlank()) {
+                            val otp = OtpUtil.generateOtp()
+                            otpManager.saveOtp(email.text, otp)
+                            sendOtpEmail(context, email.text, otp)
+                            Toast.makeText(context, "Đã tạo và gửi OTP", Toast.LENGTH_SHORT).show()
+                            onOtpSent(email.text) // gọi callback để điều hướng
+                        } else {
+                            Toast.makeText(context, "Email không hợp lệ", Toast.LENGTH_SHORT).show()
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(83.dp),

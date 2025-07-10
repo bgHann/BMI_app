@@ -1,5 +1,6 @@
 package com.example.bmi_app_nhom17.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,13 +32,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
+import androidx.compose.ui.platform.LocalContext
+import com.example.bmi_app_nhom17.model.UserCredentialManager
 
 @Composable
-fun ComfirmPassworkScreen(onComfirmClick: () -> Unit = {}) {
+fun ComfirmPassworkScreen(
+    email: String = "",
+    onComfirmClick: () -> Unit = {}
+) {
     // State cho các ô nhập
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    val credentialManager = remember { UserCredentialManager(context) }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = (BackgroudColor)
@@ -93,16 +102,22 @@ fun ComfirmPassworkScreen(onComfirmClick: () -> Unit = {}) {
             Spacer(modifier = Modifier.height(180.dp))
 
             Button(
-                onClick = onComfirmClick,
+                onClick = {
+                    if (newPassword.length < 6) {
+                        Toast.makeText(context, "Mật khẩu phải dài ít nhất 6 ký tự", Toast.LENGTH_SHORT).show()
+                    } else if (newPassword != confirmPassword) {
+                        Toast.makeText(context, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show()
+                    } else {
+                        credentialManager.savePassword(email, newPassword)
+                        Toast.makeText(context, "Đổi mật khẩu thành công", Toast.LENGTH_LONG).show()
+                        onComfirmClick()
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = BackgroudButon),
+                    .height(56.dp),
                 shape = RoundedCornerShape(50.dp),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 10.dp,
-                    pressedElevation = 15.dp
-                )
+                colors = ButtonDefaults.buttonColors(containerColor = BackgroudButon)
             ) {
                 Text(
                     text = "Comfirm",

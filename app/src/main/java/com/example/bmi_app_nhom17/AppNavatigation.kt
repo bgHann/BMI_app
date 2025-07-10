@@ -43,16 +43,22 @@ fun AppNavigation() {
         composable("sendOtp") {
             Porgot_pass(
                 onBackClick = { navController.navigate("signIn") },
-                onSendOtpClick = { navController.navigate("enterOtp") }
+                onOtpSent = { email -> navController.navigate("enterOtp/$email") }
             )
         }
 
-        composable("enterOtp") {
-            EnterOtpScreen(onResetClick = { navController.navigate("comfirmPass") })
+        composable("enterOtp/{email}") { backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            EnterOtpScreen(
+                email = email,
+                onResetClick = { navController.navigate("comfirmPass/$email") })
         }
 
-        composable("comfirmPass") {
-            ComfirmPassworkScreen(onComfirmClick = {navController.navigate("signIn")})
+        composable("comfirmPass/{email}") {backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            ComfirmPassworkScreen(
+                email = email,
+                onComfirmClick = {navController.navigate("signIn")})
         }
 
         composable("Dashboard") { backStackEntry ->

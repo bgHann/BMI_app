@@ -1,5 +1,6 @@
 package com.example.bmi_app_nhom17.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,12 +17,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
+import com.example.bmi_app_nhom17.model.LocalOtpManager
+import com.example.bmi_app_nhom17.viewmodel.sendOtpEmail
+
 
 @Composable
-fun EnterOtpScreen(onResetClick: () -> Unit = {}) {
+fun EnterOtpScreen(
+    email: String = "",
+    onResetClick: () -> Unit = {}
+) {
     // State cho các ô nhập
     var otp by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    val otpManager = remember { LocalOtpManager(context) }
+
     Surface(modifier = Modifier.fillMaxSize(),
         color = (BackgroudColor)) {
         Column(
@@ -63,16 +74,26 @@ fun EnterOtpScreen(onResetClick: () -> Unit = {}) {
             Spacer(modifier = Modifier.height(180.dp))
 
             Button(
-                onClick = onResetClick,
+                onClick = {
+                    val savedOtp = otpManager.getOtp(email)
+                    if (savedOtp == null) {
+                        Toast.makeText(context, "Không tìm thấy OTP", Toast.LENGTH_SHORT).show()
+                    } else if (savedOtp == otp) {
+                        Toast.makeText(context, "Xác thực thành công!", Toast.LENGTH_LONG).show()
+                        otpManager.clearOtp(email)
+                        onResetClick() // ← chuyển sang màn hình Reset Password
+                    } else {
+                        Toast.makeText(context, "OTP không đúng!", Toast.LENGTH_LONG).show()
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = BackgroudButon),
+                    .height(56.dp),
                 shape = RoundedCornerShape(50.dp),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 10.dp,
-                    pressedElevation = 15.dp
-                )
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = BackgroudButon
+                ),
+                elevation = ButtonDefaults.buttonElevation(10.dp)
             ) {
                 Text(
                     text = "Reset Password",
