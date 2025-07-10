@@ -71,7 +71,6 @@ fun DetailsScreen(
 
         Button(
             onClick = {
-                viewModel.addBmiRecord(bmi, category, "No comment") // bạn có thể thay "No comment" bằng mô tả thật
                 onResult(bmi, category)
             },
             modifier = Modifier
