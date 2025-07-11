@@ -59,6 +59,12 @@ fun SignUpScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(
+                text = "Sign Up!!",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.height(10.dp))
             RoundedInputField(
                 value = name,
                 onValueChange = { name = it },

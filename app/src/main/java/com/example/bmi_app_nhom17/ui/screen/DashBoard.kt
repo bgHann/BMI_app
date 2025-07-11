@@ -73,7 +73,8 @@ fun Dashboard (
                         )
                 }
             }
-            Spacer(modifier = Modifier.size(390.dp))
+            Spacer(modifier = Modifier.size(400.dp))
+
             bottom_design(onleft, onCenter, onRight)
 
                 }

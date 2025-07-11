@@ -30,7 +30,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.lint.kotlin.metadata.Visibility
 import com.example.bmi_app_nhom17.model.UserCredentialManager
 
 
@@ -176,7 +175,7 @@ fun RoundedOutlinedInputField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        placeholder = { Text(label) },
+        placeholder = { Text(label, color = Color.Gray) },
         shape = RoundedCornerShape(50.dp),
         singleLine = true,
         visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
@@ -184,17 +183,26 @@ fun RoundedOutlinedInputField(
             {
                 val icon = if (passwordVisible) Icons.Default.Favorite else Icons.Default.FavoriteBorder
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(imageVector = icon, contentDescription = "Toggle password visibility")
+                    Icon(imageVector = icon, contentDescription = "Toggle password visibility", tint = Color.Gray)
                 }
             }
         } else null,
         keyboardOptions = KeyboardOptions(
-            keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
+            keyboardType = keyboardType,
             imeAction = imeAction
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() },
             onDone = { onImeAction() }
+        ),
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = Color.Gray,
+            unfocusedBorderColor = Color.Gray,
+            cursorColor = Color.Gray,
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black,
+            focusedPlaceholderColor = Color.Gray,
+            unfocusedPlaceholderColor = Color.Gray
         ),
         modifier = modifier
             .fillMaxWidth()
@@ -204,6 +212,7 @@ fun RoundedOutlinedInputField(
             }
     )
 }
+
 
 
 @Preview(showBackground = true)
