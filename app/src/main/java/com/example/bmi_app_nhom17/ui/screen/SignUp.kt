@@ -65,6 +65,12 @@ fun SignUpScreen(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
+            Text(
+                text = "Let's help you meet your goal",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 32.dp)
+            )
             Spacer(modifier = Modifier.height(10.dp))
             RoundedInputField(
                 value = name,
