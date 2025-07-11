@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bmi_app_nhom17.model.BmiRecord
@@ -43,7 +44,7 @@ fun TrackScreen(
                 Spacer(modifier = Modifier.height(12.dp))
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(620.dp))
 
             // Thanh điều hướng dưới
             bottom_design(onleft, onCenter, onRight)
@@ -78,4 +79,10 @@ fun BmiHistoryItem(record: BmiRecord, index: Int) {
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun TrackPreview(){
+    TrackScreen()
 }

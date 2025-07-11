@@ -34,6 +34,7 @@ fun settingScreen (
     onPrileclick : () -> Unit ={ },
     onNotifications : ()-> Unit = {},
     onSignOut : ()-> Unit = {},
+    onResetpass: () -> Unit = {},
     onleft : ()->Unit = {},
     onCenter : ()->Unit = {},
     onRight: ()->Unit = {},

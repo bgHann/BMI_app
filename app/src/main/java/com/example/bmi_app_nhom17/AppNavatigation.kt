@@ -102,7 +102,7 @@ fun AppNavigation() {
                 onPrileclick = { navController.navigate("Profile") },
                 onSignOut = { navController.navigate("signIn") },
                 onNotifications = { navController.navigate("Notification") },
-                onleft = { navController.navigate("Tracks/0.0/Unknown/comment") } // mặc định nếu chưa có
+                onleft = { navController.navigate("Tracks/0.0/Unknown/comment") }
             )
         }
 

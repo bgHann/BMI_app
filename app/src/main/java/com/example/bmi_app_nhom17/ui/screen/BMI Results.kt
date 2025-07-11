@@ -29,7 +29,6 @@ fun BmiResultScreen(
     category: String,
     onDetails: (Float) -> Unit,
 ) {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
