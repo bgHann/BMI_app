@@ -25,8 +25,12 @@ import com.example.bmi_app_nhom17.ui.theme.BackgroudButon
 import com.example.bmi_app_nhom17.ui.theme.BackgroudColor
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lint.kotlin.metadata.Visibility
 import com.example.bmi_app_nhom17.model.UserCredentialManager
 
 
@@ -46,12 +50,11 @@ fun signIn(
     val context = LocalContext.current
     val sharedPref = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
     val credentialManager = remember { UserCredentialManager(context) }
-    val storedPassword = credentialManager.getPassword(email)
 
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .clickable { focusManager.clearFocus() }, // chạm ra ngoài để ẩn bàn phím
+            .clickable { focusManager.clearFocus() },
         color = BackgroudColor
     ) {
         Column(
@@ -63,9 +66,10 @@ fun signIn(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.SemiBold
             )
+
             Spacer(modifier = Modifier.size(60.dp))
 
-            RoundedInputField(
+            RoundedOutlinedInputField(
                 value = email,
                 onValueChange = { email = it },
                 label = "Enter your email",
@@ -75,15 +79,14 @@ fun signIn(
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            RoundedInputField(
+            RoundedOutlinedInputField(
                 value = pass,
                 onValueChange = { pass = it },
                 label = "Enter password",
-                keyboardType = KeyboardType.Password,
-                visualTransformation = PasswordVisualTransformation(),
-                focusRequester = passFocusRequester,
+                isPassword = true,
                 imeAction = ImeAction.Done,
-                onImeAction = { focusManager.clearFocus() }
+                onImeAction = { focusManager.clearFocus() },
+                focusRequester = passFocusRequester
             )
 
             Spacer(modifier = Modifier.size(30.dp))
@@ -114,9 +117,7 @@ fun signIn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(83.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF6C63FF)
-                ),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6C63FF)),
                 elevation = ButtonDefaults.buttonElevation(
                     defaultElevation = 10.dp,
                     pressedElevation = 15.dp,
@@ -159,7 +160,7 @@ fun signIn(
 }
 
 @Composable
-fun RoundedInputField(
+fun RoundedOutlinedInputField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
@@ -167,23 +168,34 @@ fun RoundedInputField(
     imeAction: ImeAction = ImeAction.Next,
     onImeAction: () -> Unit = {},
     keyboardType: KeyboardType = KeyboardType.Text,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
+    isPassword: Boolean = false,
     focusRequester: FocusRequester? = null
 ) {
-    TextField(
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         placeholder = { Text(label) },
         shape = RoundedCornerShape(50.dp),
+        singleLine = true,
+        visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+        trailingIcon = if (isPassword) {
+            {
+                val icon = if (passwordVisible) Icons.Default.Favorite else Icons.Default.FavoriteBorder
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = icon, contentDescription = "Toggle password visibility")
+                }
+            }
+        } else null,
         keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType,
+            keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
             imeAction = imeAction
         ),
         keyboardActions = KeyboardActions(
             onNext = { onImeAction() },
             onDone = { onImeAction() }
         ),
-        visualTransformation = visualTransformation,
         modifier = modifier
             .fillMaxWidth()
             .height(55.dp)
@@ -192,6 +204,7 @@ fun RoundedInputField(
             }
     )
 }
+
 
 @Preview(showBackground = true)
 @Composable
