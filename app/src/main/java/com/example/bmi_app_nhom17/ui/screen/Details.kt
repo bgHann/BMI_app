@@ -8,7 +8,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,6 +33,7 @@ fun DetailsScreen(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(modifier = Modifier.height(8.dp))
+
         Text(
             "SUMMARY",
             style = MaterialTheme.typography.titleLarge,
@@ -46,8 +50,19 @@ fun DetailsScreen(
             elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
         ) {
             Text(
-                "Your BMI: %.1f  %s".format(bmi, category),
-                fontSize = 24.sp,
+                buildAnnotatedString {
+                    append("Your BMI: ")
+
+                    withStyle(style = SpanStyle(fontSize = 32.sp, color = Color.Black)) {
+                        append("%.1f".format(bmi)) // BMI to hơn
+                    }
+
+                    append("  ")
+
+                    withStyle(style = SpanStyle(fontSize = 20.sp, color = Color.Gray)) {
+                        append(category) // Phân loại nhỏ hơn
+                    }
+                },
                 modifier = Modifier.padding(16.dp)
             )
         }
@@ -79,6 +94,7 @@ fun DetailsScreen(
         ) {
             Text("Results")
         }
+
         Spacer(modifier = Modifier.height(8.dp))
     }
 }
