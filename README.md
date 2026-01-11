@@ -26,5 +26,6 @@ link Latex: https://www.overleaf.com/read/tnypvdtjcsck#1386f0
 1. **Clone repository**:  
    ```bash
    git clone https://github.com/bgHann/BMI_app.git
-
-   Mở bằng Android Studio. Build và chạy trên Android Emulator hoặc thiết bị thật. Nhập chiều cao và cân nặng, nhấn Calculate → xem BMI và phân loại sức khỏe.
+``
+   Mở bằng Android Studio.
+   
