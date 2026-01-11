@@ -17,7 +17,7 @@ link Latex: https://www.overleaf.com/read/tnypvdtjcsck#1386f0
 - Tính toán **BMI chuẩn** theo chiều cao và cân nặng.  
 - Hiển thị kết quả **ngay lập tức** kèm phân loại sức khỏe.  
 - Giao diện **dễ sử dụng và trực quan** cho mọi đối tượng.  
-- Là dự án minh họa **Kotlin + Android Studio**, phù hợp cho học tập và demo.  
+- Là dự án minh họa **Kotlin + Android Studio**.  
 
 ---
 
